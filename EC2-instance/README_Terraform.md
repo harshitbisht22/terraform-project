@@ -136,13 +136,38 @@ output "instance_id" {
 - Store state in remote backend for teams (e.g., S3 + DynamoDB lock)
 - Lock provider versions with `.terraform.lock.hcl`
 
+---
+
 ### 🔧 Common Commands
 
 ```bash
+# Initialize Terraform working directory
 terraform init
+
+# Validate syntax and configuration
+terraform validate
+
+# Plan and apply when using terraform.tfvars
 terraform plan -var-file="terraform.tfvars"
 terraform apply -var-file="terraform.tfvars"
 ```
+
+---
+
+### 📘 Note on Using Modules
+
+- When you use **modules**, you typically **pass variable values directly in the module block**, not through `terraform.tfvars`.
+
+✅ Example:
+```hcl
+module "my_ec2" {
+  source        = "./modules/ec2_module"
+  ami_id        = "ami-123456"
+  instance_type = "t2.micro"
+}
+```
+
+🚫 No need for a separate `terraform.tfvars` unless you're abstracting values even further.
 
 ---
 
